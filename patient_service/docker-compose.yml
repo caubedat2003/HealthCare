@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  patient_service:
+    build: .
+    container_name: patient_service
+    command: gunicorn patient_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8000"
+    depends_on:
+      - patient_db
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@patient_db:5432/patient_db
+
+  patient_db:
+    image: postgres:15
+    container_name: patient_db
+    environment:
+      POSTGRES_DB: patient_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1
+    ports:
+      - "5433:5432"
+    volumes:
+      - patient_db_data:/var/lib/postgresql/data
+
+volumes:
+  patient_db_data:
