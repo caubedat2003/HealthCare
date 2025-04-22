@@ -1,0 +1,35 @@
+version: '3.8'
+
+services: 
+  patient_service:
+    build: 
+      context: ./patient_service
+    container_name: patient_service
+    command: gunicorn patient_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./doctor_service:/app
+    ports:
+      - "8001:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=patient_service.settings
+      - MYSQL_DATABASE=patient_db
+      - MYSQL_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: patient_db
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+    - "3307:3306"  
+
+  doctor_service:
+  _service:
+  patient_service:
+  patient_service:
+  patient_service:
+  patient_service:
+  patient_service:

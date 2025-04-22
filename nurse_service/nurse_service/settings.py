@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'nurse',
+    'patientVitals',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +78,12 @@ WSGI_APPLICATION = 'nurse_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nurse_db',      # This is your schema (database) name
+        'USER': 'root',
+        'PASSWORD': '123456',            # leave blank if there's no password
+        'HOST': 'mysql_nurse',
+        'PORT': '3306',
     }
 }
 

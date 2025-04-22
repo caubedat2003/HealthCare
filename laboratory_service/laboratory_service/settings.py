@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'LabTest',
+    'LabResult',
+    'LabTechnician',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +79,12 @@ WSGI_APPLICATION = 'laboratory_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'laboratory_db',      # This is your schema (database) name
+        'USER': 'root',
+        'PASSWORD': '123456',            # leave blank if there's no password
+        'HOST': 'mysql_laboratory',
+        'PORT': '3306',
     }
 }
 

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'appointment',
     'payment',
     'prescription',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -80,12 +81,12 @@ WSGI_APPLICATION = 'patient_service.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'patient_db',         # database name
-        'USER': 'postgres',       # postgres username
-        'PASSWORD': '1',
-        'HOST': 'patient_db',     # important: must match service name in docker-compose.yml
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'patient_db',      # This is your schema (database) name
+        'USER': 'root',
+        'PASSWORD': '123456',            # leave blank if there's no password
+        'HOST': 'mysql',
+        'PORT': '3306',
     }
 }
 

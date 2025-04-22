@@ -9,22 +9,21 @@ services:
       - .:/app
     ports:
       - "8001:8000"
-    depends_on:
-      - patient_db
     environment:
-      - DATABASE_URL=postgres://postgres:postgres@patient_db:5432/patient_db
+      - DJANGO_SETTINGS_MODULE=patient_service.settings
+      - MYSQL_DATABASE=patient_db
+      - MYSQL_HOST=mysql
+      - MYSQL_ROOT_PASSWORD=123456
 
-  patient_db:
-    image: postgres:15
-    container_name: patient_db
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
     environment:
-      POSTGRES_DB: patient_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 1
+      MYSQL_DATABASE: patient_db
+      MYSQL_ROOT_PASSWORD: 123456
     ports:
-      - "5433:5432"
-    volumes:
-      - patient_db_data:/var/lib/postgresql/data
+     - "3307:3306"  
 
 volumes:
   patient_db_data:

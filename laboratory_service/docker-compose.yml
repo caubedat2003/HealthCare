@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  laboratory_service:
+    build: .
+    container_name: laboratory_service
+    command: gunicorn laboratory_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8007:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=laboratory_service.settings
+      - MYSQL_DATABASE=laboratory_db
+      - MYSQL_HOST=mysql_laboratory
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_laboratory:
+    image: mysql:8.0
+    container_name: mysql_laboratory
+    restart: always
+    environment:
+      MYSQL_DATABASE: laboratory_db  # Use a separate database for laboratory service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3313:3306"  # Changed port to avoid conflict
+
+volumes:
+  laboratory_db_data:

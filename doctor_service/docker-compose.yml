@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  doctor_service:
+    build: .
+    container_name: doctor_service
+    command: gunicorn doctor_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8002:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=doctor_service.settings
+      - MYSQL_DATABASE=doctor_db
+      - MYSQL_HOST=mysql_doctor
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_doctor:
+    image: mysql:8.0
+    container_name: mysql_doctor
+    restart: always
+    environment:
+      MYSQL_DATABASE: doctor_db  # Use a separate database for doctor service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3308:3306"  # Changed port to avoid conflict
+
+volumes:
+  doctor_db_data:
