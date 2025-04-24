@@ -7,7 +7,7 @@ services:
     container_name: patient_service
     command: gunicorn patient_service.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./doctor_service:/app
+      - ./patient_service:/app
     ports:
       - "8001:8000"
     environment:
@@ -27,9 +27,176 @@ services:
     - "3307:3306"  
 
   doctor_service:
-  _service:
-  patient_service:
-  patient_service:
-  patient_service:
-  patient_service:
-  patient_service:
+    build: 
+      context: ./doctor_service
+    container_name: doctor_service
+    command: gunicorn doctor_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./doctor_service:/app
+    ports:
+      - "8002:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=doctor_service.settings
+      - MYSQL_DATABASE=doctor_db
+      - MYSQL_HOST=mysql_doctor
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_doctor:
+    image: mysql:8.0
+    container_name: mysql_doctor
+    restart: always
+    environment:
+      MYSQL_DATABASE: doctor_db  # Use a separate database for doctor service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3308:3306"
+
+  admin_service:
+    build: 
+      context: ./admin_service
+    container_name: admin_service
+    command: gunicorn admin_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./admin_service:/app
+    ports:
+      - "8003:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=admin_service.settings
+      - MYSQL_DATABASE=admin_db
+      - MYSQL_HOST=mysql_admin
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_admin:
+    image: mysql:8.0
+    container_name: mysql_admin
+    restart: always
+    environment:
+      MYSQL_DATABASE: admin_db  # Use a separate database for doctor service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3309:3306"
+
+  pharmacy_service:
+    build: 
+      context: ./pharmacy_service
+    container_name: pharmacy_service
+    command: gunicorn pharmacy_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./pharmacy_service:/app
+    ports:
+      - "8004:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=pharmacy_service.settings
+      - MYSQL_DATABASE=pharmacy_db
+      - MYSQL_HOST=mysql_pharmacy
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_pharmacy:
+    image: mysql:8.0
+    container_name: mysql_pharmacy
+    restart: always
+    environment:
+      MYSQL_DATABASE: pharmacy_db  # Use a separate database for pharmacy service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3310:3306"  
+
+  nurse_service:
+    build: 
+      context: ./nurse_service
+    container_name: nurse_service
+    command: gunicorn nurse_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./nurse_service:/app
+    ports:
+      - "8005:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=nurse_service.settings
+      - MYSQL_DATABASE=nurse_db
+      - MYSQL_HOST=mysql_nurse
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_nurse:
+    image: mysql:8.0
+    container_name: mysql_nurse
+    restart: always
+    environment:
+      MYSQL_DATABASE: nurse_db  # Use a separate database for nurse service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3311:3306"
+
+  insurance_service:
+    build: 
+      context: ./insurance_service
+    container_name: insurance_service
+    command: gunicorn insurance_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./insurance_service:/app
+    ports:
+      - "8006:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=insurance_service.settings
+      - MYSQL_DATABASE=insurance_db
+      - MYSQL_HOST=mysql_insurance
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_insurance:
+    image: mysql:8.0
+    container_name: mysql_insurance
+    restart: always
+    environment:
+      MYSQL_DATABASE: insurance_db  # Use a separate database for insurance service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3312:3306"
+
+  laboratory_service:
+    build: 
+      context: ./laboratory_service
+    container_name: laboratory_service
+    command: gunicorn laboratory_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./laboratory_service:/app
+    ports:
+      - "8007:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=laboratory_service.settings
+      - MYSQL_DATABASE=laboratory_db
+      - MYSQL_HOST=mysql_laboratory
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_laboratory:
+    image: mysql:8.0
+    container_name: mysql_laboratory
+    restart: always
+    environment:
+      MYSQL_DATABASE: laboratory_db  # Use a separate database for laboratory service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3313:3306"
+
+  notification_service:
+    build: 
+      context: ./notification_service
+    container_name: notification_service
+    command: gunicorn notification_service.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./notification_service:/app
+    ports:
+      - "8008:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=notification_service.settings
+      - MYSQL_DATABASE=notification_db
+      - MYSQL_HOST=mysql_notification
+      - MYSQL_ROOT_PASSWORD=123456
+
+  mysql_notification:
+    image: mysql:8.0
+    container_name: mysql_notification
+    restart: always
+    environment:
+      MYSQL_DATABASE: notification_db  # Use a separate database for notification service
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+     - "3314:3306"

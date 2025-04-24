@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class PushNotification(models.Model):
-    user = models.IntegerField(on_delete=models.CASCADE, related_name='push_notifications')
+    user = models.IntegerField()
     device_token = models.CharField(max_length=255)
     title = models.CharField(max_length=100)
     message = models.TextField()

@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class EmailNotification(models.Model):
-    user_id = models.IntegerField(on_delete=models.CASCADE, related_name='email_notifications')
+    user_id = models.IntegerField()
     recipient_email = models.EmailField()
     subject = models.CharField(max_length=255)
     body = models.TextField()
