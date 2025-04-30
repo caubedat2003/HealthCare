@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Typography, TextField, Button, MenuItem, Box, Alert } from '@mui/material';
+import { Container, Typography, TextField, Button, Box, Alert } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../services/apiService';
@@ -7,9 +7,10 @@ import { registerUser } from '../services/apiService';
 function Register() {
     const [formData, setFormData] = useState({
         username: '',
+        first_name: '',
+        last_name: '',
         email: '',
         password: '',
-        role: '',
     });
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -29,15 +30,6 @@ function Register() {
         }
     };
 
-    const roles = [
-        'patient',
-        'doctor',
-        'nurse',
-        'pharmacist',
-        'admin',
-        'lab_technician',
-    ];
-
     return (
         <Container maxWidth="sm" className="homepage-container">
             <Typography variant="h4" component="h1" color="primary" align="center" gutterBottom>
@@ -49,6 +41,22 @@ function Register() {
                 </Alert>
             )}
             <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                <TextField
+                    label="First Name"
+                    name="first_name"
+                    value={formData.first_name}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                />
+                <TextField
+                    label="Last Name"
+                    name="last_name"
+                    value={formData.last_name}
+                    onChange={handleChange}
+                    required
+                    fullWidth
+                />
                 <TextField
                     label="Username"
                     name="username"
@@ -75,21 +83,6 @@ function Register() {
                     required
                     fullWidth
                 />
-                <TextField
-                    select
-                    label="Role"
-                    name="role"
-                    value={formData.role}
-                    onChange={handleChange}
-                    required
-                    fullWidth
-                >
-                    {roles.map((role) => (
-                        <MenuItem key={role} value={role}>
-                            {role.charAt(0).toUpperCase() + role.slice(1).replace('_', ' ')}
-                        </MenuItem>
-                    ))}
-                </TextField>
                 <Button
                     type="submit"
                     variant="contained"

@@ -18,10 +18,10 @@ function Homepage() {
                 startIcon={<LoginIcon />}
                 size="large"
                 fullWidth
-                className="mb-2"
             >
                 Login
             </Button>
+            <div className='mb-1'></div>
             <Button
                 component={Link}
                 to="/register"
