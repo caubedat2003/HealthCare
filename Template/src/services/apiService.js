@@ -6,3 +6,7 @@ export const registerUser = async (data) => {
     const response = await axios.post(`${API_URL}/api/admin/users/register`, data);
     return response.data;
 };
+export const loginUser = async (data) => {
+    const response = await axios.post(`${API_URL}/api/admin/users/login`, data);
+    return response.data;
+};
