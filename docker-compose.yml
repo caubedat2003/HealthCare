@@ -200,3 +200,36 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
     ports:
      - "3314:3306"
+
+  frontend:
+    build:
+      context: ./Template
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Template:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_GATEWAY_URL=http://localhost:8080
+    depends_on:
+      - api-gateway
+    restart: unless-stopped
+
+  api-gateway:
+    image: nginx:latest
+    container_name: api-gateway
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - patient_service
+      - doctor_service
+      - nurse_service
+      - insurance_service
+      - laboratory_service
+      - pharmacy_service
+      - notification_service
+      - admin_service

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Typography, Button } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 function Homepage() {
     return (
@@ -17,8 +18,20 @@ function Homepage() {
                 startIcon={<LoginIcon />}
                 size="large"
                 fullWidth
+                className="mb-2"
             >
                 Login
+            </Button>
+            <Button
+                component={Link}
+                to="/register"
+                variant="contained"
+                color="primary"
+                startIcon={<PersonAddIcon />}
+                size="large"
+                fullWidth
+            >
+                Register
             </Button>
         </Container>
     );

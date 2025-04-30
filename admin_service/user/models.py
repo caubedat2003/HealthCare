@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
-# Create your models here.
-class User(models.Model):
+class User(AbstractUser):
     ROLE_CHOICES = [
         ('patient', 'Patient'),
         ('doctor', 'Doctor'),
@@ -11,9 +11,6 @@ class User(models.Model):
         ('lab_technician', 'Lab Technician'),
     ]
 
-    username = models.CharField(max_length=100, unique=True)
-    password = models.CharField(max_length=128)  # use hashed passwords (Django handles this if you use AbstractUser)
-    email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES)
 
     def __str__(self):
