@@ -23,10 +23,21 @@ export const registerUser = async (data) => {
     const response = await axios.post(`${API_URL}/api/admin/users/register`, data);
     return response.data;
 };
+
 export const loginUser = async (data) => {
     const response = await api.post('/api/admin/users/login', data);
     // Store tokens in localStorage
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
     return response.data;
+};
+
+export const getUserProfile = async () => {
+    const response = await api.get('/api/admin/users/me');
+    return response.data;
+};
+
+export const logoutUser = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
 };
