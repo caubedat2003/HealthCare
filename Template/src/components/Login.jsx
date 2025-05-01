@@ -24,7 +24,7 @@ function Login() {
             console.log('Login successful:', response); // For debugging
             navigate('/'); // Redirect to homepage or dashboard
         } catch (err) {
-            setError(err.response?.data?.detail || Object.values(err.response?.data || {}).flat().join(' ') || 'Login failed');
+            setError(err.response?.data?.non_field_errors?.[0] || 'Login failed');
         }
     };
 
