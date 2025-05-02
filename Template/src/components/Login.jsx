@@ -22,7 +22,20 @@ function Login() {
         try {
             const response = await loginUser(formData);
             console.log('Login successful:', response); // For debugging
-            navigate('/'); // Redirect to homepage or dashboard
+            if (response.user.role === 'patient') {
+                navigate('/patient');
+            } else if (response.user.role === 'admin') {
+                navigate('/admin');
+            }
+            else if (response.user.role === 'doctor') {
+                navigate('/doctor');
+            }
+            else if (response.user.role === 'pharmacist') {
+                navigate('/pharmacy');
+            }
+            else {
+                setError('Unsupported user role');
+            }
         } catch (err) {
             setError(err.response?.data?.non_field_errors?.[0] || 'Login failed');
         }
