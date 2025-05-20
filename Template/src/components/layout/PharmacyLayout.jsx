@@ -21,7 +21,7 @@ import {
     Inventory as StockIcon,
     Payment as PaymentIcon,
 } from '@mui/icons-material';
-import { getUserProfile, logoutUser } from '../services/apiService';
+import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 

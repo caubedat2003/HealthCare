@@ -17,19 +17,25 @@ import {
 } from '@mui/material';
 import {
     Menu as MenuIcon,
-    Science as TestIcon,
-    Description as ReportIcon,
+    CalendarToday as ScheduleIcon,
+    History as HistoryIcon,
+    Healing as TreatmentIcon,
+    Science as LabIcon,
+    MedicalServices as MedicalIcon,
 } from '@mui/icons-material';
-import { getUserProfile, logoutUser } from '../services/apiService';
+import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 
 const navItems = [
-    { name: 'Medical Tests', path: '/laboratory/tests', icon: <TestIcon /> },
-    { name: 'Test Reports', path: '/laboratory/reports', icon: <ReportIcon /> },
+    { name: 'Schedule Appointments', path: '/doctor/schedule', icon: <ScheduleIcon /> },
+    { name: 'Patient History', path: '/doctor/patient-history', icon: <HistoryIcon /> },
+    { name: 'Treatments', path: '/doctor/treatments', icon: <TreatmentIcon /> },
+    { name: 'Order Lab Tests', path: '/doctor/lab-tests', icon: <LabIcon /> },
+    { name: 'Medical Reports', path: '/doctor/medical-reports', icon: <MedicalIcon /> },
 ];
 
-function LaboratoryLayout() {
+function DoctorLayout() {
     const [user, setUser] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -75,7 +81,7 @@ function LaboratoryLayout() {
         <div>
             <Toolbar>
                 <Typography variant="h6" noWrap>
-                    HealthPro Laboratory
+                    HealthPro Doctor
                 </Typography>
             </Toolbar>
             <List>
@@ -114,7 +120,7 @@ function LaboratoryLayout() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-                        Laboratory Dashboard
+                        Doctor Dashboard
                     </Typography>
                     {user ? (
                         <>
@@ -185,4 +191,4 @@ function LaboratoryLayout() {
     );
 }
 
-export default LaboratoryLayout;
+export default DoctorLayout;

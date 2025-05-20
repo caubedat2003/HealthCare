@@ -25,13 +25,16 @@ function Login() {
             if (response.user.role === 'patient') {
                 navigate('/patient');
             } else if (response.user.role === 'admin') {
-                navigate('/admin');
+                navigate('/admin-page');
             }
             else if (response.user.role === 'doctor') {
                 navigate('/doctor');
             }
             else if (response.user.role === 'pharmacist') {
                 navigate('/pharmacy');
+            }
+            else if (response.user.role === 'laboratory') {
+                navigate('/laboratory');
             }
             else {
                 setError('Unsupported user role');

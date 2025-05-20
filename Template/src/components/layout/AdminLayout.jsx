@@ -23,7 +23,7 @@ import {
     Category as CategoryIcon,
     CalendarToday as ScheduleIcon,
 } from '@mui/icons-material';
-import { getUserProfile, logoutUser } from '../services/apiService';
+import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 

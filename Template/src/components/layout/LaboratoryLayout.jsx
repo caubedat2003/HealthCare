@@ -17,25 +17,19 @@ import {
 } from '@mui/material';
 import {
     Menu as MenuIcon,
-    Event as EventIcon,
-    MedicalServices as MedicalIcon,
-    Science as LabIcon,
-    Receipt as PrescriptionIcon,
-    Payment as PaymentIcon,
+    Science as TestIcon,
+    Description as ReportIcon,
 } from '@mui/icons-material';
-import { getUserProfile, logoutUser } from '../services/apiService';
+import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 
 const navItems = [
-    { name: 'Book Appointment', path: '/patient/book-appointment', icon: <EventIcon /> },
-    { name: 'Medical Report', path: '/patient/medical-report', icon: <MedicalIcon /> },
-    { name: 'Lab Test Report', path: '/patient/lab-test-report', icon: <LabIcon /> },
-    { name: 'Receive Prescription', path: '/patient/prescription', icon: <PrescriptionIcon /> },
-    { name: 'Pay Medical Bill', path: '/patient/pay-bill', icon: <PaymentIcon /> },
+    { name: 'Medical Tests', path: '/laboratory/tests', icon: <TestIcon /> },
+    { name: 'Test Reports', path: '/laboratory/reports', icon: <ReportIcon /> },
 ];
 
-function PatientLayout() {
+function LaboratoryLayout() {
     const [user, setUser] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -81,7 +75,7 @@ function PatientLayout() {
         <div>
             <Toolbar>
                 <Typography variant="h6" noWrap>
-                    HealthPro Patient
+                    HealthPro Laboratory
                 </Typography>
             </Toolbar>
             <List>
@@ -120,7 +114,7 @@ function PatientLayout() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-                        Patient Dashboard
+                        Laboratory Dashboard
                     </Typography>
                     {user ? (
                         <>
@@ -191,4 +185,4 @@ function PatientLayout() {
     );
 }
 
-export default PatientLayout;
+export default LaboratoryLayout;

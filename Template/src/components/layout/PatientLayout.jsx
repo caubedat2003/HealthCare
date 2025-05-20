@@ -17,25 +17,25 @@ import {
 } from '@mui/material';
 import {
     Menu as MenuIcon,
-    CalendarToday as ScheduleIcon,
-    History as HistoryIcon,
-    Healing as TreatmentIcon,
-    Science as LabIcon,
+    Event as EventIcon,
     MedicalServices as MedicalIcon,
+    Science as LabIcon,
+    Receipt as PrescriptionIcon,
+    Payment as PaymentIcon,
 } from '@mui/icons-material';
-import { getUserProfile, logoutUser } from '../services/apiService';
+import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 
 const navItems = [
-    { name: 'Schedule Appointments', path: '/doctor/schedule', icon: <ScheduleIcon /> },
-    { name: 'Patient History', path: '/doctor/patient-history', icon: <HistoryIcon /> },
-    { name: 'Treatments', path: '/doctor/treatments', icon: <TreatmentIcon /> },
-    { name: 'Order Lab Tests', path: '/doctor/lab-tests', icon: <LabIcon /> },
-    { name: 'Medical Reports', path: '/doctor/medical-reports', icon: <MedicalIcon /> },
+    { name: 'Book Appointment', path: '/patient/book-appointment', icon: <EventIcon /> },
+    { name: 'Medical Report', path: '/patient/medical-report', icon: <MedicalIcon /> },
+    { name: 'Lab Test Report', path: '/patient/lab-test-report', icon: <LabIcon /> },
+    { name: 'Receive Prescription', path: '/patient/prescription', icon: <PrescriptionIcon /> },
+    { name: 'Pay Medical Bill', path: '/patient/pay-bill', icon: <PaymentIcon /> },
 ];
 
-function DoctorLayout() {
+function PatientLayout() {
     const [user, setUser] = useState(null);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -81,7 +81,7 @@ function DoctorLayout() {
         <div>
             <Toolbar>
                 <Typography variant="h6" noWrap>
-                    HealthPro Doctor
+                    HealthPro Patient
                 </Typography>
             </Toolbar>
             <List>
@@ -120,7 +120,7 @@ function DoctorLayout() {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-                        Doctor Dashboard
+                        Patient Dashboard
                     </Typography>
                     {user ? (
                         <>
@@ -191,4 +191,4 @@ function DoctorLayout() {
     );
 }
 
-export default DoctorLayout;
+export default PatientLayout;

@@ -1,17 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from role.models import Role
 
 class User(AbstractUser):
-    ROLE_CHOICES = [
-        ('patient', 'Patient'),
-        ('doctor', 'Doctor'),
-        ('nurse', 'Nurse'),
-        ('pharmacist', 'Pharmacist'),
-        ('admin', 'Admin'),
-        ('lab_technician', 'Lab Technician'),
-    ]
-
-    role = models.CharField(max_length=20, choices=ROLE_CHOICES)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, related_name='users')
 
     def __str__(self):
         return self.username

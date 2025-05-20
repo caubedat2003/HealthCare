@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, CircularProgress, Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Snackbar } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { fetchUsers, fetchRoles, deleteUser } from '../../services/adminApiService';
+import { fetchRoles, deleteRole } from '../../services/adminApiService';
 
-function UserManager() {
-    const [users, setUsers] = useState([]);
-    const [roles, setRoles] = useState({});
+function RoleManager() {
+    const [roles, setRoles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-    const [userToDelete, setUserToDelete] = useState(null);
+    const [roleToDelete, setRoleToDelete] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
     const navigate = useNavigate();
     const location = useLocation();
@@ -18,11 +17,10 @@ function UserManager() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const [roleMap, userData] = await Promise.all([fetchRoles(), fetchUsers()]);
-                setRoles(roleMap);
-                setUsers(userData);
+                const roleData = await fetchRoles(true);
+                setRoles(roleData);
             } catch (err) {
-                setError(err.message);
+                setError('Failed to fetch roles. Please check your authentication or try again later.');
                 console.error(err);
             } finally {
                 setLoading(false);
@@ -30,38 +28,38 @@ function UserManager() {
         };
 
         fetchData();
-    }, [location.state?.refresh]);
+    }, [location.state?.refresh]); // Refresh when location.state.refresh changes
 
-    const handleAddUserClick = () => {
-        navigate('/admin-page/users/create');
+    const handleEditClick = (roleId) => {
+        navigate(`/admin-page/roles/edit/${roleId}`);
     };
 
-    const handleEditClick = (userId) => {
-        navigate(`/admin-page/users/edit/${userId}`);
+    const handleCreateClick = () => {
+        navigate('/admin-page/roles/create');
     };
 
-    const handleDeleteClick = (user) => {
-        setUserToDelete(user);
+    const handleDeleteClick = (role) => {
+        setRoleToDelete(role);
         setDeleteDialogOpen(true);
     };
 
     const handleDeleteConfirm = async () => {
         try {
-            await deleteUser(userToDelete.id);
-            setUsers(users.filter((user) => user.id !== userToDelete.id));
-            setSnackbar({ open: true, message: 'User deleted successfully', severity: 'success' });
+            await deleteRole(roleToDelete.id);
+            setRoles(roles.filter((role) => role.id !== roleToDelete.id));
+            setSnackbar({ open: true, message: 'Role deleted successfully', severity: 'success' });
         } catch (err) {
-            setSnackbar({ open: true, message: 'Failed to delete user', severity: 'error' });
+            setSnackbar({ open: true, message: 'Failed to delete role', severity: 'error' });
             console.error(err);
         } finally {
             setDeleteDialogOpen(false);
-            setUserToDelete(null);
+            setRoleToDelete(null);
         }
     };
 
     const handleDeleteCancel = () => {
         setDeleteDialogOpen(false);
-        setUserToDelete(null);
+        setRoleToDelete(null);
     };
 
     const handleSnackbarClose = () => {
@@ -71,15 +69,15 @@ function UserManager() {
     return (
         <Container>
             <Typography variant="h4" gutterBottom>
-                User Manager
+                Role Manager
             </Typography>
             <Button
                 variant="contained"
                 color="primary"
-                onClick={handleAddUserClick}
+                onClick={handleCreateClick}
                 sx={{ mb: 2 }}
             >
-                Add User
+                Create Role
             </Button>
             {loading ? (
                 <CircularProgress />
@@ -90,27 +88,25 @@ function UserManager() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Full Name</TableCell>
-                                <TableCell>Username</TableCell>
-                                <TableCell>Email</TableCell>
-                                <TableCell>Role</TableCell>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Name</TableCell>
+                                <TableCell>Description</TableCell>
                                 <TableCell>Actions</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {users.map((user) => (
-                                <TableRow key={user.id}>
-                                    <TableCell>{`${user.first_name} ${user.last_name}`}</TableCell>
-                                    <TableCell>{user.username}</TableCell>
-                                    <TableCell>{user.email}</TableCell>
-                                    <TableCell>{user.role ? roles[user.role] || 'Unknown' : 'None'}</TableCell>
+                            {roles.map((role) => (
+                                <TableRow key={role.id}>
+                                    <TableCell>{role.id}</TableCell>
+                                    <TableCell>{role.name}</TableCell>
+                                    <TableCell>{role.description || 'None'}</TableCell>
                                     <TableCell>
                                         <Button
                                             variant="outlined"
                                             color="primary"
                                             size="small"
                                             sx={{ mr: 1 }}
-                                            onClick={() => handleEditClick(user.id)}
+                                            onClick={() => handleEditClick(role.id)}
                                         >
                                             Edit
                                         </Button>
@@ -118,7 +114,7 @@ function UserManager() {
                                             variant="outlined"
                                             color="error"
                                             size="small"
-                                            onClick={() => handleDeleteClick(user)}
+                                            onClick={() => handleDeleteClick(role)}
                                         >
                                             Delete
                                         </Button>
@@ -137,7 +133,7 @@ function UserManager() {
                 <DialogTitle id="delete-dialog-title">Confirm Delete</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you sure you want to delete the user "{userToDelete?.username}"? This action cannot be undone.
+                        Are you sure you want to delete the role "{roleToDelete?.name}"? This action cannot be undone.
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -162,4 +158,4 @@ function UserManager() {
     );
 }
 
-export default UserManager;
+export default RoleManager;
