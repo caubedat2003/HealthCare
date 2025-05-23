@@ -16,6 +16,7 @@ import CreateUser from './components/admin/CreateUser';
 import EditUser from './components/admin/EditUser';
 import PatientLayout from './components/layout/PatientLayout';
 import PatientHome from './components/patient/PatientHome';
+import Profile from './components/patient/Profile';
 import BookAppointment from './components/patient/BookAppointment';
 import MedicalReport from './components/patient/MedicalReport';
 import LabTestReport from './components/patient/LabTestReport';
@@ -68,6 +69,7 @@ function App() {
           <Route path="lab-test-report" element={<LabTestReport />} />
           <Route path="prescription" element={<ReceivePrescription />} />
           <Route path="pay-bill" element={<PayMedicalBill />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
         <Route path="/doctor" element={<DoctorLayout />}>

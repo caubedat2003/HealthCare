@@ -23,11 +23,12 @@ import {
     Receipt as PrescriptionIcon,
     Payment as PaymentIcon,
 } from '@mui/icons-material';
+import ContactPageIcon from '@mui/icons-material/ContactPage';
 import { getUserProfile, logoutUser } from '../../services/apiService';
-
 const drawerWidth = 240;
 
 const navItems = [
+    { name: 'Profile', path: '/patient/profile', icon: <ContactPageIcon /> },
     { name: 'Book Appointment', path: '/patient/book-appointment', icon: <EventIcon /> },
     { name: 'Medical Report', path: '/patient/medical-report', icon: <MedicalIcon /> },
     { name: 'Lab Test Report', path: '/patient/lab-test-report', icon: <LabIcon /> },

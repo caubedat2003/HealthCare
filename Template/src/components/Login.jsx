@@ -22,18 +22,21 @@ function Login() {
         try {
             const response = await loginUser(formData);
             console.log('Login successful:', response); // For debugging
-            if (response.user.role === 'patient') {
+            localStorage.setItem('access_token', response.data.access);
+            localStorage.setItem('refresh_token', response.data.refresh);
+            localStorage.setItem('user_id', response.data.user.id);
+            if (response.user.role === 1) {
                 navigate('/patient');
-            } else if (response.user.role === 'admin') {
+            } else if (response.user.role === 3) {
                 navigate('/admin-page');
             }
-            else if (response.user.role === 'doctor') {
+            else if (response.user.role === 2) {
                 navigate('/doctor');
             }
-            else if (response.user.role === 'pharmacist') {
+            else if (response.user.role === 4) {
                 navigate('/pharmacy');
             }
-            else if (response.user.role === 'laboratory') {
+            else if (response.user.role === 5) {
                 navigate('/laboratory');
             }
             else {
