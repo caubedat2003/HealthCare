@@ -29,6 +29,8 @@ export const loginUser = async (data) => {
     // Store tokens in localStorage
     localStorage.setItem('access_token', response.data.access);
     localStorage.setItem('refresh_token', response.data.refresh);
+    localStorage.setItem('user_id', response.data.user.id);
+    localStorage.setItem('user_role', response.data.user.role);
     return response.data;
 };
 
@@ -40,4 +42,7 @@ export const getUserProfile = async () => {
 export const logoutUser = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_role');
+    localStorage.removeItem('userid');
 };

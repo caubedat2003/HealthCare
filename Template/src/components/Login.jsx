@@ -22,9 +22,6 @@ function Login() {
         try {
             const response = await loginUser(formData);
             console.log('Login successful:', response); // For debugging
-            localStorage.setItem('access_token', response.data.access);
-            localStorage.setItem('refresh_token', response.data.refresh);
-            localStorage.setItem('user_id', response.data.user.id);
             if (response.user.role === 1) {
                 navigate('/patient');
             } else if (response.user.role === 3) {

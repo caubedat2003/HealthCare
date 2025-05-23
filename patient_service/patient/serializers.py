@@ -8,6 +8,7 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class PatientSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
+    user_id = serializers.CharField(required=False)
 
     class Meta:
         model = Patient
@@ -24,3 +25,12 @@ class PatientSerializer(serializers.ModelSerializer):
         if Patient.objects.filter(email=value).exists():
             raise serializers.ValidationError("A patient with this email already exists.")
         return value
+    
+    def update(self, instance, validated_data):
+        address_data = validated_data.pop('address', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if address_data:
+            instance.address.update(address_data)
+        instance.save()
+        return instance
