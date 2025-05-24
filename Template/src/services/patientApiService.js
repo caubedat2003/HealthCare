@@ -35,39 +35,27 @@ export const createAppointment = async (data) => {
     }
 };
 
-export const createPatientProfile = async (data) => {
+export const getPatientProfile = async (userId) => {
     try {
-        const user_id = localStorage.getItem('user_id');
-        if (!user_id) {
-            throw new Error('No user ID available');
-        }
-        const response = await api.post('/api/patient/profile/', { ...data, user_id });
+        const response = await api.get('/api/patient/profile/', { params: { user_id: userId } });
+        return response.data;
+    } catch (error) {
+        throw error; // Để xử lý lỗi 404 trong Profile.jsx
+    }
+};
+
+export const createPatientProfile = async (profileData) => {
+    try {
+        const response = await api.post('/api/patient/profile/', profileData);
         return response.data;
     } catch (error) {
         throw new Error(error.message);
     }
 };
 
-export const getPatientProfile = async () => {
+export const updatePatientProfile = async (profileData) => {
     try {
-        const user_id = localStorage.getItem('user_id');
-        if (!user_id) {
-            throw new Error('No user ID available');
-        }
-        const response = await api.get('/api/patient/profile/', { params: { user_id } });
-        return response.data;
-    } catch (error) {
-        throw new Error(error.message);
-    }
-};
-
-export const updatePatientProfile = async (data) => {
-    try {
-        const user_id = localStorage.getItem('user_id');
-        if (!user_id) {
-            throw new Error('No user ID available');
-        }
-        const response = await api.patch('/api/patient/profile/', { ...data, user_id });
+        const response = await api.patch('/api/patient/profile/', profileData);
         return response.data;
     } catch (error) {
         throw new Error(error.message);

@@ -21,17 +21,18 @@ function ProfileAdd() {
     const [error, setError] = useState(null);
     const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
     const navigate = useNavigate();
+    const userId = localStorage.getItem('user_id');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setProfile((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
         try {
             setLoading(true);
             const data = {
+                user_id: userId,
                 full_name: profile.full_name,
                 dob: profile.dob,
                 gender: profile.gender,
@@ -47,21 +48,8 @@ function ProfileAdd() {
                 type: profile.type
             };
             await createPatientProfile(data);
-            setSnackbar({ open: true, message: 'Patient profile created successfully', severity: 'success' });
-            setProfile({
-                full_name: '',
-                dob: '',
-                gender: '',
-                phone: '',
-                email: '',
-                house_number: '',
-                street: '',
-                district: '',
-                city: '',
-                insurance_id: '',
-                type: ''
-            });
-            navigate('/profile');
+            setSnackbar({ open: true, message: 'Profile created successfully', severity: 'success' });
+            navigate('/patient/profile');
         } catch (err) {
             setError(err.message);
             setSnackbar({ open: true, message: err.message, severity: 'error' });
@@ -84,7 +72,7 @@ function ProfileAdd() {
             ) : error ? (
                 <Alert severity="error">{error}</Alert>
             ) : (
-                <form onSubmit={handleSubmit}>
+                <div>
                     <TextField
                         label="Full Name"
                         name="full_name"
@@ -199,15 +187,15 @@ function ProfileAdd() {
                         </Select>
                     </FormControl>
                     <Button
-                        type="submit"
                         variant="contained"
                         color="primary"
+                        onClick={handleSubmit}
                         sx={{ mt: 2 }}
                         disabled={loading}
                     >
                         Create Profile
                     </Button>
-                </form>
+                </div>
             )}
             <Snackbar
                 open={snackbar.open}

@@ -8,12 +8,12 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class PatientSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
-    user_id = serializers.CharField(required=False)
+    user_id = serializers.IntegerField(required=False)  # Changed to IntegerField
 
     class Meta:
         model = Patient
         fields = ['user_id', 'full_name', 'dob', 'gender', 'phone', 'email', 'address', 'insurance_id', 'type']
-        read_only_fields = ['user_id', 'created_at']
+        read_only_fields = ['created_at']  # Removed user_id from read_only_fields
 
     def create(self, validated_data):
         address_data = validated_data.pop('address')
@@ -31,6 +31,8 @@ class PatientSerializer(serializers.ModelSerializer):
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         if address_data:
-            instance.address.update(address_data)
+            for key, value in address_data.items():
+                setattr(instance.address, key, value)
+            instance.address.save()
         instance.save()
         return instance
