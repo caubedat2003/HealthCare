@@ -22,12 +22,14 @@ import {
     Healing as TreatmentIcon,
     Science as LabIcon,
     MedicalServices as MedicalIcon,
+    ContactPage as ContactPageIcon,
 } from '@mui/icons-material';
 import { getUserProfile, logoutUser } from '../../services/apiService';
 
 const drawerWidth = 240;
 
 const navItems = [
+    { name: 'Profile', path: '/doctor/profile', icon: <ContactPageIcon /> },
     { name: 'Schedule Appointments', path: '/doctor/schedule', icon: <ScheduleIcon /> },
     { name: 'Patient History', path: '/doctor/patient-history', icon: <HistoryIcon /> },
     { name: 'Treatments', path: '/doctor/treatments', icon: <TreatmentIcon /> },

@@ -25,6 +25,7 @@ import MedicalReport from './components/patient/MedicalReport';
 import LabTestReport from './components/patient/LabTestReport';
 import ReceivePrescription from './components/patient/ReceivePrescription';
 import PayMedicalBill from './components/patient/PayMedicalBill';
+import AI from './components/patient/AI';
 //doctor
 import DoctorLayout from './components/layout/DoctorLayout';
 import DoctorHome from './components/doctor/DoctorHome';
@@ -33,6 +34,8 @@ import PatientHistory from './components/doctor/PatientHistory';
 import Treatments from './components/doctor/Treatments';
 import OrderLabTests from './components/doctor/OrderLabTests';
 import MedicalReports from './components/doctor/MedicalReports';
+import DoctorProfile from './components/doctor/DoctorProfile';
+import DoctorProfileAdd from './components/doctor/DoctorProfileAdd';
 //pharmacy
 import PharmacyLayout from './components/layout/PharmacyLayout';
 import PharmacyHome from './components/pharmacy/PharmacyHome';
@@ -78,6 +81,7 @@ function App() {
           <Route path="pay-bill" element={<PayMedicalBill />} />
           <Route path="profile" element={<Profile />} />
           <Route path="profile-add" element={<ProfileAdd />} />
+          <Route path="chatbot" element={<AI />} />
         </Route>
 
         <Route path="/doctor" element={<DoctorLayout />}>
@@ -87,6 +91,8 @@ function App() {
           <Route path="treatments" element={<Treatments />} />
           <Route path="lab-tests" element={<OrderLabTests />} />
           <Route path="medical-reports" element={<MedicalReports />} />
+          <Route path="profile" element={<DoctorProfile />} />
+          <Route path="profile-add" element={<DoctorProfileAdd />} />
         </Route>
 
         <Route path="/pharmacy" element={<PharmacyLayout />}>

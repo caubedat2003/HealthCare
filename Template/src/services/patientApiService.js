@@ -61,3 +61,12 @@ export const updatePatientProfile = async (profileData) => {
         throw new Error(error.message);
     }
 };
+
+export const getDoctors = async () => {
+    try {
+        const response = await api.get('/api/doctor/list');
+        return response.data;
+    } catch (error) {
+        throw new Error('Failed to fetch doctors');
+    }
+};

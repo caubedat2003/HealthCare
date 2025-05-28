@@ -22,6 +22,7 @@ import {
     Science as LabIcon,
     Receipt as PrescriptionIcon,
     Payment as PaymentIcon,
+    SmartToy as SmartToyIcon,
 } from '@mui/icons-material';
 import ContactPageIcon from '@mui/icons-material/ContactPage';
 import { getUserProfile, logoutUser } from '../../services/apiService';
@@ -34,6 +35,7 @@ const navItems = [
     { name: 'Lab Test Report', path: '/patient/lab-test-report', icon: <LabIcon /> },
     { name: 'Receive Prescription', path: '/patient/prescription', icon: <PrescriptionIcon /> },
     { name: 'Pay Medical Bill', path: '/patient/pay-bill', icon: <PaymentIcon /> },
+    { name: 'AI Chatbot', path: '/patient/chatbot', icon: <SmartToyIcon /> },
 ];
 
 function PatientLayout() {

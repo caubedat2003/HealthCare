@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Typography, TextField, Button, CircularProgress, Alert, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { getAppointments, createAppointment } from '../../services/patientApiService';
+import { getAppointments, createAppointment, getDoctors } from '../../services/patientApiService';
 
 function BookAppointment() {
     const [appointments, setAppointments] = useState([]);
+    const [doctors, setDoctors] = useState([]);
     const [formData, setFormData] = useState({
         doctor_id: '',
         appointment_date: '',
@@ -15,6 +16,7 @@ function BookAppointment() {
 
     useEffect(() => {
         fetchAppointments();
+        fetchDoctors();
     }, []);
 
     const fetchAppointments = async () => {
@@ -27,6 +29,15 @@ function BookAppointment() {
             setSnackbar({ open: true, message: err.message, severity: 'error' });
         } finally {
             setLoading(false);
+        }
+    };
+
+    const fetchDoctors = async () => {
+        try {
+            const data = await getDoctors();
+            setDoctors(data);
+        } catch (err) {
+            setSnackbar({ open: true, message: err.message, severity: 'error' });
         }
     };
 
@@ -85,7 +96,7 @@ function BookAppointment() {
                                 <TableBody>
                                     {appointments.map((appt) => (
                                         <TableRow key={appt.id}>
-                                            <TableCell>{appt.doctor_id}</TableCell>
+                                            <TableCell>{doctors.find((doc) => doc.id === appt.doctor_id)?.name || appt.doctor_id}</TableCell>
                                             <TableCell>{new Date(appt.appointment_date).toLocaleString()}</TableCell>
                                             <TableCell>{appt.status}</TableCell>
                                             <TableCell>{new Date(appt.created_at).toLocaleString()}</TableCell>
@@ -99,16 +110,21 @@ function BookAppointment() {
                         Book New Appointment
                     </Typography>
                     <form onSubmit={handleSubmit}>
-                        <TextField
-                            label="Doctor ID"
-                            name="doctor_id"
-                            type="number"
-                            value={formData.doctor_id}
-                            onChange={handleInputChange}
-                            fullWidth
-                            margin="normal"
-                            required
-                        />
+                        <FormControl fullWidth margin="normal" required>
+                            <InputLabel>Doctor</InputLabel>
+                            <Select
+                                name="doctor_id"
+                                value={formData.doctor_id}
+                                onChange={handleInputChange}
+                                label="Doctor"
+                            >
+                                {doctors.map((doc) => (
+                                    <MenuItem key={doc.user_id} value={doc.user_id}>
+                                        {doc.name} — {doc.specialization}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
                         <TextField
                             label="Appointment Date"
                             name="appointment_date"
@@ -120,20 +136,6 @@ function BookAppointment() {
                             InputLabelProps={{ shrink: true }}
                             required
                         />
-                        <FormControl fullWidth margin="normal">
-                            <InputLabel>Status</InputLabel>
-                            <Select
-                                name="status"
-                                value={formData.status}
-                                onChange={handleInputChange}
-                                label="Status"
-                                required
-                            >
-                                <MenuItem value="Pending">Pending</MenuItem>
-                                <MenuItem value="Completed">Completed</MenuItem>
-                                <MenuItem value="Cancelled">Cancelled</MenuItem>
-                            </Select>
-                        </FormControl>
                         <Button
                             type="submit"
                             variant="contained"
